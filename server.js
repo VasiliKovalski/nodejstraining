@@ -9,39 +9,16 @@ const port = process.env.PORT || 8080;
 
 require("dotenv").config(); // Load environment variables from .env
 
-
-require("dotenv").config(); // Load environment variables
-
-const config = {
-  user: process.env.USER,
-  password: process.env.PASSWORD,
-  server: process.env.HOST, // Use remote server IP or domain
-  database: process.env.DATABASE,
-  options: {
-
-    trustServerCertificate: true, // If using a self-signed cert
-    MultipleActiveResultSets: false
-  },
-};
-const poolPromise = new sql.ConnectionPool(config)
-  .connect()
-  .then((pool) => {
-    console.log("✅ Connected to MS SQL Server");
-    return pool;
-  })
-  .catch((err) => {
-    console.error("❌ Database connection failed:", err);
-  });
-
-//const {  poolPromise } = require("./config/db");
-
-//const userRoutes = require("./routes/userRoutes");
-//const { getUsers } = require('./controllers/userController');
-
-  
-
+ 
 
 app.use(express.json()); 
+
+const userRoutes = require("./routes/userRoutes");
+const callRoutes = require("./routes/callRoutes");
+
+
+app.use("/api/users", userRoutes);
+app.use("/api/calls", callRoutes);
 
   //const pool = require("./db");
 app.get("/users", async (req, res) => {
@@ -59,21 +36,6 @@ app.get("/users", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error", jopa: err });
   }
 });
-
-// const getUsers = async () => {
-//   try {
-//     const result = await pool("SELECT * FROM playing_with_neon");
-//     console.log(result.rows); // Output all users
-//     res
-//   } catch (err) {
-//     console.error("Error fetching users:", err);
-//   }
-// };
-
-// Call the function
-
-//getUsers();
-
 
 
 

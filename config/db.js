@@ -13,6 +13,7 @@ const config = {
     MultipleActiveResultSets: false
   },
 };
+
 const poolPromise = new sql.ConnectionPool(config)
   .connect()
   .then((pool) => {
@@ -24,4 +25,6 @@ const poolPromise = new sql.ConnectionPool(config)
   });
 
 
-  module.export = { sql, poolPromise };
+  
+  
+  module.exports = { sql, poolPromise };
