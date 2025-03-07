@@ -51,7 +51,7 @@ app.get("/users", async (req, res) => {
     if (!pool) {
       throw new Error("Database connection is not available");
     }
-    const result = await pool.request().query("SELECT top 10 Name FROM customers"); // Use .request().query()
+    const result = await pool.request().query("SELECT top 20 Name FROM customers"); // Use .request().query()
 
     res.json(result.recordset); // Return JSON response
   } catch (err) {
