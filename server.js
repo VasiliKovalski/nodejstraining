@@ -4,6 +4,8 @@ const express = require('express')
 const sql = require("mssql");
 
 const app = express();
+const cors = require("cors");
+app.use(cors()); // Allows all origins
 
 const port = process.env.PORT || 8080;
 
