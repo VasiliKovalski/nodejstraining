@@ -13,12 +13,38 @@ require("dotenv").config(); // Load environment variables from .env
 
 app.use(express.json()); 
 
-const userRoutes = require("./routes/userRoutes");
-const callRoutes = require("./routes/callRoutes");
+//const userRoutes = require("./routes/userRoutes");
+//const callRoutes = require("./routes/callRoutes");
 
 
-app.use("/api/users", userRoutes);
-app.use("/api/calls", callRoutes);
+//app.use("/api/users", userRoutes);
+//app.use("/api/calls", callRoutes);
+
+
+
+const config = {
+  user: process.env.USER,
+  password: process.env.PASSWORD,
+  server: process.env.HOST, // Use remote server IP or domain
+  database: process.env.DATABASE,
+  options: {
+
+    trustServerCertificate: true, // If using a self-signed cert
+    MultipleActiveResultSets: false
+  },
+};
+
+const poolPromise = new sql.ConnectionPool(config)
+  .connect()
+  .then((pool) => {
+    console.log("✅ Connected to MS SQL Server");
+    return pool;
+  })
+  .catch((err) => {
+    console.error("❌ Database connection failed:", err);
+  });
+
+
 
   //const pool = require("./db");
 app.get("/users", async (req, res) => {
