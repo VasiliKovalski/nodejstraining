@@ -129,8 +129,9 @@ exports.getSomeCalls = async (req, res) => {
       // ✅ Fetch admins for each customer in parallel
       const enrichedCustomers = await Promise.all(
         events.map(async (event) => {
-          const admin = await getAdminsByCall(event.CallID); // Get admins for each customer
-          const callNotes = await getNotesByCallId(event.CallID); // Get admins for each customer
+          const admin = await getAdminsByCall(event.callID); // Get admins for each customer
+          const callNotes = await getNotesByCallId(event.callID); // Get admins for each customer
+          event.destination = event.gPS_Location_Destination;
 
           for (const callNote of callNotes) {
             callNote.Note = callNote.Note.replace(/<br\s*\/?>/g, "\r\n");
