@@ -16,11 +16,11 @@ require("dotenv").config(); // Load environment variables from .env
 app.use(express.json()); 
 
 const userRoutes = require("./routes/userRoutes");
-const callRoutes = require("./routes/eventRoutes");
+const eventRoutes = require("./routes/eventRoutes");
 
 
 app.use("/api/users", userRoutes);
-app.use("/api/calls", callRoutes);
+app.use("/api/events", eventRoutes);
 
 
 
