@@ -1,6 +1,6 @@
 const express = require("express");
 
-const { getCalls, getSomeCalls,  getEvents, getFatEvents } = require("../controllers/callController");
+const { getCalls, getSomeCalls,  getEvents, getFatEvents } = require("../controllers/eventlController");
 
 const router = express.Router();
 

@@ -16,7 +16,7 @@ require("dotenv").config(); // Load environment variables from .env
 app.use(express.json()); 
 
 const userRoutes = require("./routes/userRoutes");
-const callRoutes = require("./routes/callRoutes");
+const callRoutes = require("./routes/eventRoutes");
 
 
 app.use("/api/users", userRoutes);
@@ -50,7 +50,7 @@ app.get('/api', (req, res) => {
 })
 
 app.get('/', (req, res) => { 
-    res.json({"Customers": ["cuser_1werwerwer", "cuser_2werwerwer", "cuser_werwerweer3"]})
+    res.json({"Customers": ["new_version", "cuser_2werwerwer", "cuser_werwerweer3"]})
 })
 
 
