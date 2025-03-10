@@ -111,22 +111,25 @@ exports.getSomeCalls = async (req, res) => {
   exports.getFatEvents = async (req, res) => {
     try {
       const pool = await poolPromise;
-      const startDate = new Date();
+      
+      const { StartDate } = req.query;
+      console.log(req.query)
+      //startDate.setDate(startDate.getDate() -2);
       const endDate = new Date();
-      endDate.setDate(endDate.getDate() + 2);
+      endDate.setDate(endDate.getDate() + 4);
       // Fetch all customers
       const result = await pool
       .request()
-      .input("StartTime", sql.DateTime, startDate) // Input parameter
-      .input("EndTime", sql.DateTime, endDate) // Input parameter
+      .input("StartTime", sql.DateTime, StartDate) // Input parameter
+      //.input("EndTime", sql.DateTime, endDate) // Input parameter
       
-      .execute("GETNEWEVENTS"); // Call stored procedure
+      .execute("GETEVENTS"); // Call stored procedure
       const events = result.recordset;
         
       // ✅ Fetch admins for each customer in parallel
       const enrichedCustomers = await Promise.all(
         events.map(async (event) => {
-          const admins = await getAdminsByCall(event.CallID); // Get admins for each customer
+          const admin = await getAdminsByCall(event.CallID); // Get admins for each customer
           const callNotes = await getNotesByCallId(event.CallID); // Get admins for each customer
 
           for (const callNote of callNotes) {
@@ -136,7 +139,7 @@ exports.getSomeCalls = async (req, res) => {
   
           return {
             ...event,
-            admins, // Attach the list of admins
+            admin, // Attach the list of admins
             callNotes
           };
         })
