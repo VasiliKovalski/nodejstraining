@@ -73,13 +73,25 @@ exports.getSomeCalls = async (req, res) => {
       const result = await pool
         .request()
         .input("callID", sql.Int, callID)
-        .query("select A.name, A.phoneRegular, A.phoneMobile, P.name as positionName from Administrators A  " +
-                    " inner join Calls C on A.AdminID = C.AdministratorID " +
-                    " inner join Position P on P.PositionID  = A.PositionID " + 
-                    " where C.CallID = @CallID");
+        .query("SELECT A.AdminID, A.name AS adminName, A.phoneRegular, A.phoneMobile, P.PositionID, P.name AS positionName " +
+        "FROM Administrators A " + 
+        "INNER JOIN Calls C ON A.AdminID = C.AdministratorID " +
+        "INNER JOIN Position P ON P.PositionID = A.PositionID " +
+        "WHERE C.CallID = @callID");
+
+                    const admins = result.recordset.map(admin => ({
+                      adminID: admin.AdminID,
+                      name: admin.adminName,
+                      phoneRegular: admin.phoneRegular,
+                      phoneMobile: admin.phoneMobile,
+                      position: {
+                        positionID: admin.PositionID,
+                        name: admin.positionName
+                      }
+                    }));                    
   
       
-        return result.recordset; // Return list of admins
+        return admins; // Return list of admins
     } catch (err) {
       console.error(`❌ Error fetching admins for customer ${customerId}:`, err);
       return []; // Return empty array if error
