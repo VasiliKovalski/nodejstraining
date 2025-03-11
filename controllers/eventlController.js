@@ -78,24 +78,26 @@ exports.getSomeCalls = async (req, res) => {
         "INNER JOIN Calls C ON A.AdminID = C.AdministratorID " +
         "INNER JOIN Position P ON P.PositionID = A.PositionID " +
         "WHERE C.CallID = @callID");
+        
+        if (result.recordset.length === 0) return null;
 
-                    const admins = result.recordset.map(admin => ({
-                      adminID: admin.AdminID,
-                      customerID: admin.customerID,
-                      name: admin.adminName,
-                      phoneRegular: admin.phoneRegular,
-                      phoneMobile: admin.phoneMobile,
-                      positionID: admin.PositionID,
-                      position: {
-                        positionID: admin.PositionID,
-                        name: admin.positionName
-                      }
-                    }));                    
-  
+        const admin = result.recordset[0];
+
+        return {
+          adminID: admin.AdminID,
+          name: admin.adminName,
+          phoneRegular: admin.phoneRegular,
+          phoneMobile: admin.phoneMobile,
+          position: {
+            positionID: admin.PositionID,
+            name: admin.positionName
+          }
+        };  
       
-        return admins; // Return list of admins
+      
     } catch (err) {
       console.error(`❌ Error fetching admins for customer ${customerID}:`, err);
+      console.log(err)
       return []; // Return empty array if error
     }
   }
