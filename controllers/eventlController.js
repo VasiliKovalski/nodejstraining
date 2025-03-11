@@ -73,7 +73,7 @@ exports.getSomeCalls = async (req, res) => {
       const result = await pool
         .request()
         .input("callID", sql.Int, callID)
-        .query("SELECT A.AdminID, A.name AS adminName, A.phoneRegular, A.phoneMobile, P.PositionID, P.name AS positionName " +
+        .query("SELECT P.positionID, C.customerID, A.AdminID, A.name AS adminName, A.phoneRegular, A.phoneMobile, P.PositionID, P.name AS positionName " +
         "FROM Administrators A " + 
         "INNER JOIN Calls C ON A.AdminID = C.AdministratorID " +
         "INNER JOIN Position P ON P.PositionID = A.PositionID " +
@@ -81,9 +81,11 @@ exports.getSomeCalls = async (req, res) => {
 
                     const admins = result.recordset.map(admin => ({
                       adminID: admin.AdminID,
+                      customerID: admin.customerID,
                       name: admin.adminName,
                       phoneRegular: admin.phoneRegular,
                       phoneMobile: admin.phoneMobile,
+                      positionID: admin.PositionID,
                       position: {
                         positionID: admin.PositionID,
                         name: admin.positionName
@@ -93,7 +95,7 @@ exports.getSomeCalls = async (req, res) => {
       
         return admins; // Return list of admins
     } catch (err) {
-      console.error(`❌ Error fetching admins for customer ${customerId}:`, err);
+      console.error(`❌ Error fetching admins for customer ${customerID}:`, err);
       return []; // Return empty array if error
     }
   }
@@ -146,7 +148,7 @@ exports.getSomeCalls = async (req, res) => {
           event.destination = event.gPS_Location_Destination;
 
           for (const callNote of callNotes) {
-            callNote.Note = callNote.note.replace(/<br\s*\/?>/g, "\r\n");
+            callNote.note = callNote.note.replace(/<br\s*\/?>/g, "\r\n");
     
           };
   
