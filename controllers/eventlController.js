@@ -73,7 +73,7 @@ exports.getSomeCalls = async (req, res) => {
       const result = await pool
         .request()
         .input("callID", sql.Int, callID)
-        .query("select A.Name, A.PhoneRegular, A.PhoneMobile, P.Name as PositionName from Administrators A  " +
+        .query("select A.name, A.phoneRegular, A.phoneMobile, P.name as positionName from Administrators A  " +
                     " inner join Calls C on A.AdminID = C.AdministratorID " +
                     " inner join Position P on P.PositionID  = A.PositionID " + 
                     " where C.CallID = @CallID");
@@ -95,7 +95,7 @@ exports.getSomeCalls = async (req, res) => {
       const result = await pool
         .request()
         .input("callID", sql.Int, callID)
-        .query("select * from CallNotes where CallID = @callID order by dateCreated desc");
+        .query("select callNoteID, note, dateCreated, callID, outbound from callNotes where callID = @callID order by dateCreated desc");
   
       
         return result.recordset; // Return list of admins
@@ -134,7 +134,7 @@ exports.getSomeCalls = async (req, res) => {
           event.destination = event.gPS_Location_Destination;
 
           for (const callNote of callNotes) {
-            callNote.Note = callNote.Note.replace(/<br\s*\/?>/g, "\r\n");
+            callNote.Note = callNote.note.replace(/<br\s*\/?>/g, "\r\n");
     
           };
   
