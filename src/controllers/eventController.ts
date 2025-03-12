@@ -1,31 +1,43 @@
 
-const {  sql, poolPromise } = require("../config/db");  
 
-exports.getCalls = async (req, res) => {
+import sql from 'mssql'
+import { poolPromise } from '../config/db.js';
+import { Request, Response } from "express";
+
+export const getCalls = async (res: Response): Promise<void> =>  {
   try {
-    const pool = await poolPromise;
-    const result = await pool.request().query("SELECT top 5 * FROM Calls");
+    const pool = await poolPromise; 
+    if (!pool) {
+      throw new Error("Database connection failed.");
+    }
+
+    const result: sql.IResult<any> = await pool.request().query("SELECT TOP 5 * FROM Calls");
     res.json(result.recordset);
   } catch (err) {
-    res.status(500).json({ error: "Database query failed", details: err.message });
+    res.status(500).json({ error: "Database query failed", details: err });
   }
 };
 
-
-exports.getSomeCalls = async (req, res) => {
+  export const getSomeCalls = async (res: Response) => {  
     try {
       const pool = await poolPromise;
-      const result = await pool.request().query("SELECT top 5 * FROM Calls where result = 5");
+      if (!pool) {
+        throw new Error("Database connection failed.");
+      }
+      const result: sql.IResult<any> = await pool.request().query("SELECT top 5 * FROM Calls where result = 5");
       res.json(result.recordset);
     } catch (err) {
-      res.status(500).json({ error: "Database query failed", details: err.message });
+      res.status(500).json({ error: "Database query failed", details: err});
     }
   };
   
 
-  async function getAdmin(eventId, res) {
+  async function getAdmin(eventId: number) {
     try {
       const pool = await poolPromise;
+      if (!pool) {
+        throw new Error("Database connection failed.");
+      }
       const result = await pool.request()
       .input("CallID", sql.Int, eventId) 
       .query("select *, P.Name as PositionName from Administrators A  " +
@@ -38,11 +50,15 @@ exports.getSomeCalls = async (req, res) => {
     return null;
     }
   }
-
-  exports.getEvents = async (req, res) => {
+  
+  export const getEvents = async (res: Response) => {  
     try {
       const cDate = new Date();
+      
       const pool = await poolPromise;
+      if (!pool) {
+        throw new Error("Database connection failed.");
+      }
       const result = await pool
       .request()
       .input("StartTime", sql.DateTime, cDate) // Input parameter
@@ -59,15 +75,17 @@ exports.getSomeCalls = async (req, res) => {
       
       res.json(events);
     } catch (err) {
-      res.status(500).json({ error: "Database query failed", details: err.message });
+      res.status(500).json({ error: "Database query failed", details: err });
     }
   };  
 
 
-  async function getAdminsByCall(callID) {
+  async function getAdminsByCall(callID: number) {
     try {
       const pool = await poolPromise;
-
+      if (!pool) {
+        throw new Error("Database connection failed.");
+      }
        
       // Query to fetch admins linked to the customer
       const result = await pool
@@ -96,16 +114,17 @@ exports.getSomeCalls = async (req, res) => {
       
       
     } catch (err) {
-      console.error(`❌ Error fetching admins for customer ${customerID}:`, err);
-      console.log(err)
+      console.error(`❌ Error fetching admins for customer`, err);
       return []; // Return empty array if error
     }
   }
 
-  async function getNotesByCallId(callID) {
+  async function getNotesByCallId(callID: number) {
     try {
       const pool = await poolPromise;
-
+      if (!pool) {
+        throw new Error("Database connection failed.");
+      }
        
       // Query to fetch admins linked to the customer
       const result = await pool
@@ -116,17 +135,20 @@ exports.getSomeCalls = async (req, res) => {
       
         return result.recordset; // Return list of admins
     } catch (err) {
-      console.error(`❌ Error fetching admins for customer ${customerId}:`, err);
+      console.error(`❌ Error fetching admins for customer `, err);
       return []; // Return empty array if error
     }
   }
 
 
 
-
-  exports.getFatEvents = async (req, res) => {
+   export const getFatEvents = async (req: Request, res: Response) => {
+  
     try {
       const pool = await poolPromise;
+      if (!pool) {
+        throw new Error("Database connection failed.");
+      }
       
       const { StartDate } = req.query;
       console.log(req.query)
@@ -169,3 +191,6 @@ exports.getSomeCalls = async (req, res) => {
       console.error("❌ Error retrieving customers:", err);
     }
   }
+
+
+  export default getFatEvents;

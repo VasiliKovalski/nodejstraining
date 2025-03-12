@@ -1,20 +1,22 @@
-const sql = require("mssql");
+import sql from 'mssql'
 
-require("dotenv").config(); // Load environment variables
+import config from 'dotenv'
+config.config();// Load environment variables from .env
 
-const config = {
+
+const config_sql: sql.config =  {
   user: process.env.USER,
   password: process.env.PASSWORD,
-  server: process.env.HOST, // Use remote server IP or domain
+  server: process.env.HOST as string, // Use remote server IP or domain
   database: process.env.DATABASE,
   options: {
 
     trustServerCertificate: true, // If using a self-signed cert
-    MultipleActiveResultSets: false
+    
   },
 };
 
-const poolPromise = new sql.ConnectionPool(config)
+export const poolPromise = new sql.ConnectionPool(config_sql)
   .connect()
   .then((pool) => {
     console.log("✅ Connected to MS SQL Server");
@@ -27,4 +29,6 @@ const poolPromise = new sql.ConnectionPool(config)
 
   
   
-  module.exports = { sql, poolPromise };
+  
+
+  
