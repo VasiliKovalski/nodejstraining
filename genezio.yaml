@@ -1,17 +1,17 @@
 backend:
     functions:
-        - entry: server.js
+        - entry: dist/server.js
           name: express
-          path: .
+          path: ./
           type: httpServer
     language:
         name: js
         runtime: nodejs20.x
-    path: .
+    path: ./
     scripts:
         deploy:
-            - npm install
-        local:
+            - npm install && npm run build
+        local: 
             - npm install
 name: server
 region: us-east-1
