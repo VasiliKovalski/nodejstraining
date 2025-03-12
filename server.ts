@@ -22,7 +22,7 @@ import  MyFunction  from './src/config/util';
 //app.use("/api/users", userRoutes);
 app.use("/api/events", eventRoutes);
 
-let aaa = MyFunction('2439802938490');
+let aaa = MyFunction('iiiiiiii');
 console.log(aaa);
 
 //MyFunction()

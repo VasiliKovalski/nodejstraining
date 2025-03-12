@@ -22,7 +22,7 @@ export async function getConfigValue(key: string): Promise<string> {
   const MyFunction = (s: string) : string => 
   {
 
-    return 'dfgdfgdg';
+    return s;
 
   }
   export default MyFunction;

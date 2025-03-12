@@ -1,13 +1,20 @@
 {
   "compilerOptions": {
-    "target": "ES6",                      // Target modern JavaScript
-    "module": "CommonJS",                  // Use CommonJS module system
+    "target": "ES2020",                      // Target modern JavaScript
+    "module": "ESNext",                  // Use CommonJS module system
     "outDir": "./dist",                    // Output directory for compiled JavaScript files
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
     "esModuleInterop": true,
+    "noEmit": false,
+    "isolatedModules": true,
     "allowJs": true,               // Allow default imports from non-ES modules
-    "skipLibCheck": true,                  // Skip checking libraries for types (improves compile time)
+    "skipLibCheck": true,  
+    "baseUrl": ".",                // Skip checking libraries for types (improves compile time)
     "strict": true,                        // Enable strict type checking
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "paths": {"*": ["node_modules/*"]}
   },
   "include": [
     "src/**/*.ts"                          // Include all TypeScript files in the src folder
