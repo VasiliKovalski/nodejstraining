@@ -17,12 +17,12 @@ app.use(express.json());
 import  userRoutes   from './src/routes/userRoutes.js';
 import eventRoutes from "./src/routes/eventRoutes.js";
 
-import  MyFunction  from './src/config/util';
+import  MyFunction  from './src/config/util.js';
 
 //app.use("/api/users", userRoutes);
 app.use("/api/events", eventRoutes);
 
-let aaa = MyFunction('iiiiiiii');
+let aaa = MyFunction('4444444444fgdfgdfg');
 console.log(aaa);
 
 //MyFunction()
