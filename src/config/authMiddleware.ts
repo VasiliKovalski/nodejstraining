@@ -17,7 +17,7 @@ export const authenticateUser = async (
   try {
     const token = req.cookies?.authToken;
     
-    console.log('token in authenticateUser: ', token);
+    //console.log('token in authenticateUser: ', token);
 
     if (!token) {
       res.status(401).json({ message: "Unauthorized - No Token" });

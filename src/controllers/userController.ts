@@ -42,10 +42,10 @@ export const userLoginHandler = async (req: Request, res: Response) => {
   try {
     
     const { username, password } = req.body as IUserRequest;
-     console.log(USERNAME);
-     console.log(username);
-     console.log(PASSWORD);
-     console.log(password);
+    //  console.log(USERNAME);
+    //  console.log(username);
+    //  console.log(PASSWORD);
+    //  console.log(password);
 
     if (username !== USERNAME || password !== PASSWORD)
     {

@@ -176,7 +176,11 @@ export const getCalls = async (res: Response): Promise<void> =>  {
           
           event.startTime_original = event.startTime;          
           event.startTime = formatDateIgnoringUTC(event.startTime);
-          
+          console.log('Converted Starttime: ',event.startTime)
+
+          event.endTime_original = event.endTime;          
+          event.endTime = formatDateIgnoringUTC(event.endTime);
+          console.log('Converted EndTime: ',event.endTime)
           
           let end_date = new Date(event.endTime);
           event.endTime = end_date.toLocaleString();
