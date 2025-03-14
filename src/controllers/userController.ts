@@ -60,7 +60,7 @@ export const userLoginHandler = async (req: Request, res: Response) => {
      res.cookie("authToken", token, {
       httpOnly: true, // Prevent JavaScript access (XSS protection)
       secure: process.env.NODE_ENV === "production", // Use HTTPS in production
-      sameSite: "strict",
+      sameSite: "none",
       maxAge: 3600000, // 1 hour 
     });
 
