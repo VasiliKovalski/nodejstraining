@@ -7,32 +7,32 @@ import { AuthRequest } from '../config/authMiddleware.js';
 import { formatDateIgnoringUTC } from '../config/util.js';
 
 
-export const getCalls = async (res: Response): Promise<void> =>  {
-  try {
-    const pool = await poolPromise; 
-    if (!pool) {
-      throw new Error("Database connection failed.");
-    }
+// export const getCalls = async (res: Response): Promise<void> =>  {
+//   try {
+//     const pool = await poolPromise; 
+//     if (!pool) {
+//       throw new Error("Database connection failed.");
+//     }
 
-    const result: sql.IResult<any> = await pool.request().query("SELECT TOP 5 * FROM Calls");
-    res.json(result.recordset);
-  } catch (err) {
-    res.status(500).json({ error: "Database query failed", details: err });
-  }
-};
+//     const result: sql.IResult<any> = await pool.request().query("SELECT TOP 5 * FROM Calls");
+//     res.json(result.recordset);
+//   } catch (err) {
+//     res.status(500).json({ error: "Database query failed", details: err });
+//   }
+// };
 
-  export const getSomeCalls = async (res: Response) => {  
-    try {
-      const pool = await poolPromise;
-      if (!pool) {
-        throw new Error("Database connection failed.");
-      }
-      const result: sql.IResult<any> = await pool.request().query("SELECT top 5 * FROM Calls where result = 5");
-      res.json(result.recordset);
-    } catch (err) {
-      res.status(500).json({ error: "Database query failed", details: err});
-    }
-  };
+  // export const getSomeCalls = async (res: Response) => {  
+  //   try {
+  //     const pool = await poolPromise;
+  //     if (!pool) {
+  //       throw new Error("Database connection failed.");
+  //     }
+  //     const result: sql.IResult<any> = await pool.request().query("SELECT top 5 * FROM Calls where result = 5");
+  //     res.json(result.recordset);
+  //   } catch (err) {
+  //     res.status(500).json({ error: "Database query failed", details: err});
+  //   }
+  // };
   
 
   async function getAdmin(eventId: number) {
@@ -169,7 +169,7 @@ export const getCalls = async (res: Response): Promise<void> =>  {
         
       // ✅ Fetch admins for each customer in parallel
       const enrichedCustomers = await Promise.all(
-        events.map(async (event) => {
+        events.map(async (event: any) => {
           const admin = await getAdminsByCall(event.callID); // Get admins for each customer
           const callNotes = await getNotesByCallId(event.callID); // Get admins for each customer
           event.destination = event.gPS_Location_Destination;

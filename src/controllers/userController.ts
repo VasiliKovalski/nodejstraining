@@ -73,21 +73,21 @@ export const userLoginHandler = async (req: Request, res: Response) => {
 };
 
 
-const getUsers = async (res: Response) => {
-  try {
+// const getUsers = async (res: Response) => {
+//   try {
 
-    const pool = await poolPromise; 
-    if (!pool) {
-      throw new Error("Database connection failed.");
-    }
+//     const pool = await poolPromise; 
+//     if (!pool) {
+//       throw new Error("Database connection failed.");
+//     }
 
-      const result: sql.IResult<any> = await pool.request().query("SELECT top 5 * FROM Calls where result = 5");
+//       const result: sql.IResult<any> = await pool.request().query("SELECT top 5 * FROM Calls where result = 5");
     
-    res.json(result.recordset);
-  } catch (err) {
-    //res.status(500).json({ error: "Database query failed", details: err });
-  }
-};
+//     res.json(result.recordset);
+//   } catch (err) {
+//     //res.status(500).json({ error: "Database query failed", details: err });
+//   }
+// };
 
 export const userLogin = async (req:Request, res:Response) => {
   try {
@@ -108,4 +108,3 @@ export const userLogin = async (req:Request, res:Response) => {
   }
 };
 
-export default getUsers;

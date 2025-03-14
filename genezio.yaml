@@ -11,8 +11,12 @@ backend:
     scripts:
         deploy:
             - npm install && npm run build
-        local: 
+        local:
             - npm install
 name: server
 region: us-east-1
 yamlVersion: 2
+services:
+    databases:
+        - name: my-postgres-db
+          type: postgres-neon
