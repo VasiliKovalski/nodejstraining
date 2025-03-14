@@ -5,8 +5,8 @@ config.config();// Load environment variables from .env
 
 
 const config_sql: sql.config =  {
-  user: process.env.USER,
-  password: process.env.PASSWORD,
+  user: process.env.SQL_USER,
+  password: process.env.SQL_PASSWORD,
   server: process.env.HOST as string, // Use remote server IP or domain
   database: process.env.DATABASE,
   options: {

@@ -1,4 +1,4 @@
-export async function getConfigValue(key: string): Promise<string> {
+ async function getConfigValue(key: string): Promise<string> {
     try {
       const response = await fetch('./config.json'); // Ensure correct path to the JSON file
       if (!response.ok) {
@@ -19,10 +19,5 @@ export async function getConfigValue(key: string): Promise<string> {
   }
 
 
-  const MyFunction = (s: string) : string => 
-  {
-
-    return s;
-
-  }
-  export default MyFunction;
+ 
+  export default getConfigValue;

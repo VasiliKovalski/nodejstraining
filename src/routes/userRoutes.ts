@@ -1,11 +1,13 @@
 
 import express from 'express'
-import getUsers from '../controllers/eventController.js'
+import getUsers, { userLoginHandler } from '../controllers/userController.js'
+import userLogin from '../controllers/userController.js'
 
 
 const router = express.Router();
 
-router.get("/", getUsers);
+//router.post("/", getCustomersHandler);
+router.post("/login", userLoginHandler);
 
 
 export default router;

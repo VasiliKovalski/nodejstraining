@@ -3,6 +3,8 @@
 import sql from 'mssql'
 import { poolPromise } from '../config/db.js';
 import { Request, Response } from "express";
+import { AuthRequest } from '../config/authMiddleware.js';
+
 
 export const getCalls = async (res: Response): Promise<void> =>  {
   try {
@@ -51,7 +53,7 @@ export const getCalls = async (res: Response): Promise<void> =>  {
     }
   }
   
-  export const getEvents = async (res: Response) => {  
+  export const getEvents = async (req: AuthRequest, res: Response) => {  
     try {
       const cDate = new Date();
       
@@ -142,7 +144,7 @@ export const getCalls = async (res: Response): Promise<void> =>  {
 
 
 
-   export const getFatEvents = async (req: Request, res: Response) => {
+   export const getFatEvents = async (req: AuthRequest, res: Response) => {
   
     try {
       const pool = await poolPromise;
