@@ -4,6 +4,7 @@ import sql from 'mssql'
 import { poolPromise } from '../config/db.js';
 import { Request, Response } from "express";
 import { AuthRequest } from '../config/authMiddleware.js';
+import { formatDateIgnoringUTC } from '../config/util.js';
 
 
 export const getCalls = async (res: Response): Promise<void> =>  {
@@ -173,9 +174,10 @@ export const getCalls = async (res: Response): Promise<void> =>  {
           const callNotes = await getNotesByCallId(event.callID); // Get admins for each customer
           event.destination = event.gPS_Location_Destination;
           
-          let strart_date = new Date(event.startTime);
+          event.startTime_original = event.startTime;          
+          event.startTime = formatDateIgnoringUTC(event.startTime);
           
-          event.startTime = strart_date.toLocaleString();
+          
           let end_date = new Date(event.endTime);
           event.endTime = end_date.toLocaleString();
           
