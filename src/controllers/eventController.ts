@@ -154,7 +154,7 @@ export const getCalls = async (res: Response): Promise<void> =>  {
       }
       
       const { StartDate } = req.query;
-      console.log(req.query)
+      //console.log(req.query)
       //startDate.setDate(startDate.getDate() -2);
       const endDate = new Date();
       endDate.setDate(endDate.getDate() + 4);
