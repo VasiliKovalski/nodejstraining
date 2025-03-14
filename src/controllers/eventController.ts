@@ -172,7 +172,13 @@ export const getCalls = async (res: Response): Promise<void> =>  {
           const admin = await getAdminsByCall(event.callID); // Get admins for each customer
           const callNotes = await getNotesByCallId(event.callID); // Get admins for each customer
           event.destination = event.gPS_Location_Destination;
-
+          
+          let strart_date = new Date(event.startTime);
+          
+          event.startTime = strart_date.toLocaleString();
+          let end_date = new Date(event.endTime);
+          event.endTime = end_date.toLocaleString();
+          
           for (const callNote of callNotes) {
             callNote.note = callNote.note.replace(/<br\s*\/?>/g, "\r\n");
     
