@@ -1,6 +1,6 @@
 import express from 'express'
-import { getCalls, getSomeCalls,  getEvents, getFatEvents } from '../controllers/eventController'
-import  { authenticateUser }  from '../config/authMiddleware';
+import { getCalls, getSomeCalls,  getEvents, getFatEvents } from '../controllers/eventController.js'
+import  { authenticateUser }  from '../config/authMiddleware.js';
 
 
 
