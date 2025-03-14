@@ -11,7 +11,7 @@ const router = express.Router();
 router.get("/", getCalls);
 router.get("/some", getSomeCalls);
 router.get("/GetEvents_OLD", getEvents);
-router.get("/GetEvents",  getFatEvents );
-//router.get("/GetEvents", authenticateUser, getFatEvents );
+//router.get("/GetEvents",  getFatEvents );
+router.get("/GetEvents", authenticateUser, getFatEvents );
 
 export default router;
