@@ -58,7 +58,7 @@ export const userLoginHandler = async (req: Request, res: Response) => {
      const token = jwt.sign({ username }, SECRET_KEY, { expiresIn: "1h" });
      
      res.cookie("authToken", token, {
-      httpOnly: true, // Prevent JavaScript access (XSS protection)
+      httpOnly: false, // Prevent JavaScript access (XSS protection)
       secure: process.env.NODE_ENV === "production", // Use HTTPS in production
       sameSite: "none",
       maxAge: 3600000, // 1 hour 
